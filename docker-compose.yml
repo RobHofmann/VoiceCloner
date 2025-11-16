@@ -1,11 +1,9 @@
-version: '3.8'
-
 services:
   voice-cloner:
     build: .
     container_name: neutts-air-api
     ports:
-      - "8000:8000"
+      - "8080:8000"
     volumes:
       # Persist voice profiles and outputs
       - ./voices:/app/voices

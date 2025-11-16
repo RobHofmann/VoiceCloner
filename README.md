@@ -39,14 +39,14 @@ CODEC_DEVICE=cuda
 docker-compose up -d --build
 ```
 
-The service will be available at `http://localhost:8000`
+The service will be available at `http://localhost:8080`
 
 ### 3. Access the Web UI
 
 Open your browser and navigate to:
 
 ```
-http://localhost:8000
+http://localhost:8080
 ```
 
 You'll see a web interface where you can:
@@ -90,7 +90,7 @@ You can also interact with the service programmatically via the REST API:
 Upload an audio file to clone a voice:
 
 ```bash
-curl -X POST http://localhost:8000/voices/clone \
+curl -X POST http://localhost:8080/voices/clone \
   -F "file=@/path/to/your/voice.wav" \
   -F "voice_name=my_voice" \
   -F "reference_text=Optional transcription of the audio"
@@ -117,7 +117,7 @@ curl -X POST http://localhost:8000/voices/clone \
 Convert text to speech using a cloned voice:
 
 ```bash
-curl -X POST http://localhost:8000/tts/generate \
+curl -X POST http://localhost:8080/tts/generate \
   -F "text=Hello, this is my cloned voice speaking!" \
   -F "voice_name=my_voice" \
   -F "output_filename=output.wav" \
@@ -129,7 +129,7 @@ curl -X POST http://localhost:8000/tts/generate \
 ### List All Voices
 
 ```bash
-curl http://localhost:8000/voices
+curl http://localhost:8080/voices
 ```
 
 **Response:**
@@ -149,7 +149,7 @@ curl http://localhost:8000/voices
 ### Delete a Voice
 
 ```bash
-curl -X DELETE http://localhost:8000/voices/my_voice
+curl -X DELETE http://localhost:8080/voices/my_voice
 ```
 
 ## Python Example
@@ -160,7 +160,7 @@ import requests
 # Clone a voice
 with open("my_voice.wav", "rb") as f:
     response = requests.post(
-        "http://localhost:8000/voices/clone",
+        "http://localhost:8080/voices/clone",
         files={"file": f},
         data={
             "voice_name": "john",
@@ -171,7 +171,7 @@ print(response.json())
 
 # Generate speech
 response = requests.post(
-    "http://localhost:8000/tts/generate",
+    "http://localhost:8080/tts/generate",
     data={
         "text": "Hello, this is a test of voice cloning!",
         "voice_name": "john"
@@ -192,7 +192,7 @@ formData.append('file', audioFile); // File object from input
 formData.append('voice_name', 'sarah');
 formData.append('reference_text', 'Optional transcription');
 
-const cloneResponse = await fetch('http://localhost:8000/voices/clone', {
+const cloneResponse = await fetch('http://localhost:8080/voices/clone', {
   method: 'POST',
   body: formData
 });
@@ -203,7 +203,7 @@ const ttsData = new FormData();
 ttsData.append('text', 'This is my cloned voice!');
 ttsData.append('voice_name', 'sarah');
 
-const ttsResponse = await fetch('http://localhost:8000/tts/generate', {
+const ttsResponse = await fetch('http://localhost:8080/tts/generate', {
   method: 'POST',
   body: ttsData
 });
@@ -219,9 +219,9 @@ audio.play();
 
 Once the container is running:
 
-- **Web UI:** `http://localhost:8000`
-- **Swagger API Docs:** `http://localhost:8000/docs`
-- **ReDoc API Docs:** `http://localhost:8000/redoc`
+- **Web UI:** `http://localhost:8080`
+- **Swagger API Docs:** `http://localhost:8080/docs`
+- **ReDoc API Docs:** `http://localhost:8080/redoc`
 
 ## Directory Structure
 
@@ -280,7 +280,7 @@ docker-compose logs -f
 
 ### Check API health
 ```bash
-curl http://localhost:8000/health
+curl http://localhost:8080/health
 ```
 
 ### Reset everything
