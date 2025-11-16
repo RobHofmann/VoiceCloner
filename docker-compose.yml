@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  voice-cloner:
+    build: .
+    container_name: neutts-air-api
+    ports:
+      - "8000:8000"
+    volumes:
+      # Persist voice profiles and outputs
+      - ./voices:/app/voices
+      - ./outputs:/app/outputs
+    environment:
+      # Set to 'cuda' if you have NVIDIA GPU support
+      - BACKBONE_DEVICE=${BACKBONE_DEVICE:-cpu}
+      - CODEC_DEVICE=${CODEC_DEVICE:-cpu}
+    restart: unless-stopped
+    # Uncomment below if using GPU
+    # deploy:
+    #   resources:
+    #     reservations:
+    #       devices:
+    #         - driver: nvidia
+    #           count: 1
+    #           capabilities: [gpu]

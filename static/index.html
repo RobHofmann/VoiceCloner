@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NeuTTS Air - Voice Cloning</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎙️ NeuTTS Air Voice Cloning</h1>
+            <p class="subtitle">Clone voices and generate speech with AI</p>
+            <div class="status-bar">
+                <span id="status-indicator" class="status-dot"></span>
+                <span id="status-text">Checking connection...</span>
+            </div>
+        </header>
+
+        <main>
+            <!-- Clone Voice Section -->
+            <section class="card">
+                <h2>📝 Clone a Voice</h2>
+                <p class="help-text">Upload a 3-15 second audio sample (WAV, MP3, FLAC, or OGG)</p>
+
+                <form id="clone-form">
+                    <div class="form-group">
+                        <label for="voice-name">Voice Name:</label>
+                        <input type="text" id="voice-name" name="voice-name"
+                               placeholder="e.g., My Voice" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="reference-text">Reference Text (optional):</label>
+                        <input type="text" id="reference-text" name="reference-text"
+                               placeholder="Transcription of the audio">
+                        <small>Providing the transcription can improve quality</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="audio-file" class="file-label">
+                            <span class="file-label-text">Choose Audio File</span>
+                            <input type="file" id="audio-file" name="audio-file"
+                                   accept=".wav,.mp3,.flac,.ogg" required>
+                        </label>
+                        <div id="file-name" class="file-name"></div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" id="clone-btn">
+                        Clone Voice
+                    </button>
+                    <div id="clone-status" class="status-message"></div>
+                </form>
+            </section>
+
+            <!-- My Voices Section -->
+            <section class="card">
+                <h2>🎵 My Voices</h2>
+                <div id="voices-list" class="voices-list">
+                    <p class="loading">Loading voices...</p>
+                </div>
+            </section>
+
+            <!-- Generate Speech Section -->
+            <section class="card">
+                <h2>🔊 Generate Speech</h2>
+
+                <form id="generate-form">
+                    <div class="form-group">
+                        <label for="voice-select">Select Voice:</label>
+                        <select id="voice-select" name="voice-select" required>
+                            <option value="">-- Select a voice --</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="text-input">Text to Speak:</label>
+                        <textarea id="text-input" name="text-input" rows="4"
+                                  placeholder="Enter the text you want to convert to speech..." required></textarea>
+                        <small id="char-count">0 characters</small>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" id="generate-btn">
+                        Generate Speech
+                    </button>
+                    <div id="generate-status" class="status-message"></div>
+                </form>
+
+                <!-- Audio Player -->
+                <div id="audio-player-container" class="audio-player-container" style="display: none;">
+                    <h3>Generated Audio</h3>
+                    <audio id="audio-player" controls></audio>
+                    <div class="audio-controls">
+                        <button class="btn btn-secondary" id="download-btn">Download</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tips Section -->
+            <section class="card tips">
+                <h2>💡 Tips for Best Results</h2>
+                <ul>
+                    <li><strong>Audio Quality:</strong> Use clear audio with minimal background noise</li>
+                    <li><strong>Duration:</strong> 3-15 seconds is optimal for voice cloning</li>
+                    <li><strong>Format:</strong> WAV files at 16-44kHz work best, mono channel preferred</li>
+                    <li><strong>Reference Text:</strong> Providing transcription improves voice quality</li>
+                    <li><strong>Natural Speech:</strong> Use audio with natural, continuous speech</li>
+                </ul>
+            </section>
+        </main>
+
+        <footer>
+            <p>Powered by <a href="https://github.com/neuphonic/neutts-air" target="_blank">NeuTTS Air</a> by Neuphonic</p>
+            <p><a href="/docs" target="_blank">API Documentation</a></p>
+        </footer>
+    </div>
+
+    <script src="/static/app.js"></script>
+</body>
+</html>
