@@ -21,8 +21,14 @@
             <!-- Clone Voice Section -->
             <section class="card">
                 <h2>📝 Clone a Voice</h2>
-                <p class="help-text">Upload a 3-15 second audio sample (WAV, MP3, FLAC, or OGG)</p>
+                <p class="help-text">Record your voice or upload an audio file (3-15 seconds recommended)</p>
                 <p class="help-text" style="color: #10b981; font-size: 0.9rem;">✓ Audio will be automatically optimized (converted to mono, normalized, resampled to 24kHz)</p>
+
+                <!-- Audio Source Tabs -->
+                <div class="audio-source-tabs">
+                    <button type="button" class="tab-btn active" data-tab="upload">📁 Upload File</button>
+                    <button type="button" class="tab-btn" data-tab="record">🎤 Record Audio</button>
+                </div>
 
                 <form id="clone-form">
                     <div class="form-group">
@@ -32,19 +38,48 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="reference-text">Reference Text (optional):</label>
+                        <label for="reference-text">Reference Text (optional but recommended):</label>
                         <input type="text" id="reference-text" name="reference-text"
                                placeholder="Transcription of the audio">
-                        <small>Providing the transcription can improve quality</small>
+                        <small>Providing the transcription significantly improves quality</small>
                     </div>
 
-                    <div class="form-group">
-                        <label for="audio-file" class="file-label">
-                            <span class="file-label-text">Choose Audio File</span>
-                            <input type="file" id="audio-file" name="audio-file"
-                                   accept=".wav,.mp3,.flac,.ogg" required>
-                        </label>
-                        <div id="file-name" class="file-name"></div>
+                    <!-- Upload Tab Content -->
+                    <div class="tab-content active" id="upload-tab">
+                        <div class="form-group">
+                            <label for="audio-file" class="file-label">
+                                <span class="file-label-text">Choose Audio File</span>
+                                <input type="file" id="audio-file" name="audio-file"
+                                       accept=".wav,.mp3,.flac,.ogg">
+                            </label>
+                            <div id="file-name" class="file-name"></div>
+                        </div>
+                    </div>
+
+                    <!-- Record Tab Content -->
+                    <div class="tab-content" id="record-tab">
+                        <div class="recorder-container">
+                            <div class="recorder-controls">
+                                <button type="button" class="btn btn-record" id="start-record-btn">
+                                    <span class="record-icon">⏺</span> Start Recording
+                                </button>
+                                <button type="button" class="btn btn-stop" id="stop-record-btn" disabled>
+                                    <span class="stop-icon">⏹</span> Stop
+                                </button>
+                                <button type="button" class="btn btn-secondary" id="clear-record-btn" disabled>
+                                    🗑️ Clear
+                                </button>
+                            </div>
+                            <div class="recording-info">
+                                <div id="recording-timer" class="recording-timer">00:00</div>
+                                <div id="recording-status" class="recording-status"></div>
+                            </div>
+                            <div id="audio-preview-container" class="audio-preview-container" style="display: none;">
+                                <h4>Preview Recording</h4>
+                                <audio id="audio-preview" controls></audio>
+                                <p class="preview-info" id="preview-info"></p>
+                            </div>
+                        </div>
                     </div>
 
                     <button type="submit" class="btn btn-primary" id="clone-btn">

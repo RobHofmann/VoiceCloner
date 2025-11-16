@@ -364,6 +364,159 @@ footer a:hover {
     float: right;
 }
 
+/* Audio Source Tabs */
+.audio-source-tabs {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 2px solid var(--border-color);
+}
+
+.tab-btn {
+    background: none;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    color: var(--text-muted);
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    transition: all 0.3s ease;
+    margin-bottom: -2px;
+}
+
+.tab-btn:hover {
+    color: var(--text-color);
+    background: rgba(99, 102, 241, 0.1);
+}
+
+.tab-btn.active {
+    color: var(--primary-color);
+    border-bottom-color: var(--primary-color);
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+/* Recorder Interface */
+.recorder-container {
+    padding: 1.5rem;
+    background: var(--input-bg);
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+}
+
+.recorder-controls {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.btn-record {
+    background: var(--error-color);
+    color: white;
+}
+
+.btn-record:hover {
+    background: #dc2626;
+    transform: translateY(-2px);
+}
+
+.btn-record:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.btn-stop {
+    background: var(--border-color);
+    color: white;
+}
+
+.btn-stop:hover:not(:disabled) {
+    background: var(--text-muted);
+}
+
+.btn-stop:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.record-icon,
+.stop-icon {
+    font-size: 1.2rem;
+    display: inline-block;
+}
+
+.recording-info {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.recording-timer {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--text-color);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.5rem;
+}
+
+.recording-timer.recording {
+    color: var(--error-color);
+    animation: pulse-timer 1s infinite;
+}
+
+@keyframes pulse-timer {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+}
+
+.recording-status {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+}
+
+.recording-status.active {
+    color: var(--error-color);
+    font-weight: 500;
+}
+
+.recording-status.active::before {
+    content: "⏺ ";
+    animation: pulse 1s infinite;
+}
+
+.audio-preview-container {
+    margin-top: 1.5rem;
+    padding: 1rem;
+    background: var(--card-bg);
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+}
+
+.audio-preview-container h4 {
+    margin-bottom: 0.75rem;
+    color: var(--text-color);
+}
+
+.audio-preview-container audio {
+    width: 100%;
+    margin-bottom: 0.5rem;
+}
+
+.preview-info {
+    color: var(--text-muted);
+    font-size: 0.875rem;
+    margin: 0;
+}
+
 /* Loading spinner */
 .spinner {
     display: inline-block;

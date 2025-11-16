@@ -108,8 +108,8 @@ async def clone_voice(
     """
     try:
         # Validate file type
-        if not file.filename.lower().endswith(('.wav', '.mp3', '.flac', '.ogg')):
-            raise HTTPException(400, "Only audio files are supported (wav, mp3, flac, ogg)")
+        if not file.filename.lower().endswith(('.wav', '.mp3', '.flac', '.ogg', '.webm')):
+            raise HTTPException(400, "Only audio files are supported (wav, mp3, flac, ogg, webm)")
 
         # Save uploaded file temporarily
         voice_id = str(uuid.uuid4())
