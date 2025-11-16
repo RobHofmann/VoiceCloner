@@ -3,6 +3,8 @@ import json
 from pathlib import Path
 from typing import Optional
 import soundfile as sf
+import librosa
+import numpy as np
 from fastapi import FastAPI, UploadFile, File, Form, HTTPException
 from fastapi.responses import FileResponse, JSONResponse, HTMLResponse
 from fastapi.staticfiles import StaticFiles
@@ -109,13 +111,27 @@ async def clone_voice(
         if not file.filename.lower().endswith(('.wav', '.mp3', '.flac', '.ogg')):
             raise HTTPException(400, "Only audio files are supported (wav, mp3, flac, ogg)")
 
-        # Save uploaded file
+        # Save uploaded file temporarily
         voice_id = str(uuid.uuid4())
+        temp_path = VOICES_DIR / f"{voice_id}_temp"
         file_path = VOICES_DIR / f"{voice_id}.wav"
 
         contents = await file.read()
-        with open(file_path, 'wb') as f:
+        with open(temp_path, 'wb') as f:
             f.write(contents)
+
+        # Load and preprocess audio
+        # Convert to mono, resample to 24kHz (optimal for the model)
+        audio, sr = librosa.load(str(temp_path), sr=24000, mono=True)
+
+        # Normalize audio
+        audio = audio / np.max(np.abs(audio))
+
+        # Save preprocessed audio
+        sf.write(str(file_path), audio, 24000)
+
+        # Remove temporary file
+        os.remove(temp_path)
 
         # Initialize TTS if needed
         init_tts()

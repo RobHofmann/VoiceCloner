@@ -22,6 +22,7 @@
             <section class="card">
                 <h2>📝 Clone a Voice</h2>
                 <p class="help-text">Upload a 3-15 second audio sample (WAV, MP3, FLAC, or OGG)</p>
+                <p class="help-text" style="color: #10b981; font-size: 0.9rem;">✓ Audio will be automatically optimized (converted to mono, normalized, resampled to 24kHz)</p>
 
                 <form id="clone-form">
                     <div class="form-group">
@@ -102,9 +103,10 @@
                 <ul>
                     <li><strong>Audio Quality:</strong> Use clear audio with minimal background noise</li>
                     <li><strong>Duration:</strong> 3-15 seconds is optimal for voice cloning</li>
-                    <li><strong>Format:</strong> WAV files at 16-44kHz work best, mono channel preferred</li>
-                    <li><strong>Reference Text:</strong> Providing transcription improves voice quality</li>
-                    <li><strong>Natural Speech:</strong> Use audio with natural, continuous speech</li>
+                    <li><strong>Format:</strong> Any audio format works - the system auto-converts to mono 24kHz WAV</li>
+                    <li><strong>Reference Text:</strong> IMPORTANT - Providing the exact transcription significantly improves voice quality</li>
+                    <li><strong>Natural Speech:</strong> Use audio with natural, continuous speech (like a monologue)</li>
+                    <li><strong>Avoid:</strong> Music, multiple speakers, long pauses, or sudden volume changes</li>
                 </ul>
             </section>
         </main>
