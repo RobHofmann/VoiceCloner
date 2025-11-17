@@ -164,6 +164,35 @@ async def clone_voice(
     except Exception as e:
         raise HTTPException(500, f"Error cloning voice: {str(e)}")
 
+def chunk_text(text: str, max_chars: int = 200) -> list:
+    """
+    Split text into chunks for processing long text.
+    Tries to split on sentence boundaries.
+    """
+    if len(text) <= max_chars:
+        return [text]
+
+    chunks = []
+    sentences = text.replace('!', '.').replace('?', '.').split('.')
+    current_chunk = ""
+
+    for sentence in sentences:
+        sentence = sentence.strip()
+        if not sentence:
+            continue
+
+        if len(current_chunk) + len(sentence) + 2 <= max_chars:
+            current_chunk += sentence + ". "
+        else:
+            if current_chunk:
+                chunks.append(current_chunk.strip())
+            current_chunk = sentence + ". "
+
+    if current_chunk:
+        chunks.append(current_chunk.strip())
+
+    return chunks if chunks else [text]
+
 @app.post("/tts/generate")
 async def generate_speech(
     text: str = Form(...),
@@ -194,8 +223,20 @@ async def generate_speech(
         # Get reference text if available
         ref_text = profile.get("reference_text")
 
-        # Generate speech
-        wav = tts.infer(text, ref_codes, ref_text)
+        # Split long text into chunks to avoid model limitations
+        text_chunks = chunk_text(text, max_chars=200)
+
+        # Generate speech for each chunk
+        audio_segments = []
+        for chunk in text_chunks:
+            chunk_wav = tts.infer(chunk, ref_codes, ref_text)
+            audio_segments.append(chunk_wav)
+
+        # Concatenate all audio segments
+        if len(audio_segments) > 1:
+            wav = np.concatenate(audio_segments)
+        else:
+            wav = audio_segments[0]
 
         # Save output
         if output_filename is None:
