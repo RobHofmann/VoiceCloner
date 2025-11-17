@@ -13,11 +13,10 @@ services:
       - BACKBONE_DEVICE=${BACKBONE_DEVICE:-cpu}
       - CODEC_DEVICE=${CODEC_DEVICE:-cpu}
     restart: unless-stopped
-    # Uncomment below if using GPU
-    # deploy:
-    #   resources:
-    #     reservations:
-    #       devices:
-    #         - driver: nvidia
-    #           count: 1
-    #           capabilities: [gpu]
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
