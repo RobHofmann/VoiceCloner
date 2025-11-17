@@ -391,8 +391,8 @@ async function startRecording() {
             clearRecordBtn.disabled = false;
         };
 
-        // Start recording
-        mediaRecorder.start();
+        // Start recording (request data every 100ms for smoother recording)
+        mediaRecorder.start(100);
         recordingStartTime = Date.now();
 
         // Update UI
