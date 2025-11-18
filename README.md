@@ -24,12 +24,14 @@ cp .env.example .env
 ```
 
 Edit `.env` if needed (default uses CPU):
+
 ```
 BACKBONE_DEVICE=cpu
 CODEC_DEVICE=cpu
 ```
 
 For GPU support, change to `cuda`:
+
 ```
 BACKBONE_DEVICE=cuda
 CODEC_DEVICE=cuda
@@ -52,6 +54,7 @@ http://localhost:8080
 ```
 
 You'll see a web interface where you can:
+
 - Upload audio files to clone voices
 - View all your cloned voices
 - Generate speech from text using any cloned voice
@@ -68,12 +71,14 @@ curl http://localhost:8000/health
 The web interface provides an intuitive way to use the voice cloning service:
 
 1. **Clone a Voice:**
+
    - Click "Choose Audio File" and select a 3-15 second audio sample
    - Enter a name for your voice (e.g., "My Voice")
    - Optionally provide a transcription of the audio
    - Click "Clone Voice" and wait for processing
 
 2. **View Cloned Voices:**
+
    - All cloned voices appear in the "My Voices" section
    - You can delete voices you no longer need
 
@@ -99,12 +104,14 @@ curl -X POST http://localhost:8080/voices/clone \
 ```
 
 **Best practices for reference audio:**
+
 - Duration: 3-15 seconds
 - Format: WAV (mono, 16-44 kHz)
 - Quality: Clear speech, minimal background noise
 - Content: Natural continuous speech
 
 **Response:**
+
 ```json
 {
   "status": "success",
@@ -135,6 +142,7 @@ curl http://localhost:8080/voices
 ```
 
 **Response:**
+
 ```json
 {
   "voices": [
@@ -190,24 +198,24 @@ with open("output.wav", "wb") as f:
 ```javascript
 // Clone a voice
 const formData = new FormData();
-formData.append('file', audioFile); // File object from input
-formData.append('voice_name', 'sarah');
-formData.append('reference_text', 'Optional transcription');
+formData.append("file", audioFile); // File object from input
+formData.append("voice_name", "sarah");
+formData.append("reference_text", "Optional transcription");
 
-const cloneResponse = await fetch('http://localhost:8080/voices/clone', {
-  method: 'POST',
-  body: formData
+const cloneResponse = await fetch("http://localhost:8080/voices/clone", {
+  method: "POST",
+  body: formData,
 });
 const cloneResult = await cloneResponse.json();
 
 // Generate speech
 const ttsData = new FormData();
-ttsData.append('text', 'This is my cloned voice!');
-ttsData.append('voice_name', 'sarah');
+ttsData.append("text", "This is my cloned voice!");
+ttsData.append("voice_name", "sarah");
 
-const ttsResponse = await fetch('http://localhost:8080/tts/generate', {
-  method: 'POST',
-  body: ttsData
+const ttsResponse = await fetch("http://localhost:8080/tts/generate", {
+  method: "POST",
+  body: ttsData,
 });
 const audioBlob = await ttsResponse.blob();
 
@@ -252,12 +260,14 @@ To use NVIDIA GPU:
 1. Install [NVIDIA Container Toolkit](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html)
 
 2. Update `.env`:
+
 ```
 BACKBONE_DEVICE=cuda
 CODEC_DEVICE=cuda
 ```
 
 3. Uncomment the GPU section in `docker-compose.yml`:
+
 ```yaml
 deploy:
   resources:
@@ -269,6 +279,7 @@ deploy:
 ```
 
 4. Rebuild and run:
+
 ```bash
 docker-compose up -d --build
 ```
@@ -276,16 +287,19 @@ docker-compose up -d --build
 ## Troubleshooting
 
 ### Container won't start
+
 ```bash
 docker-compose logs -f
 ```
 
 ### Check API health
+
 ```bash
 curl http://localhost:8080/health
 ```
 
 ### Reset everything
+
 ```bash
 docker-compose down
 rm -rf voices/* outputs/*
@@ -293,6 +307,7 @@ docker-compose up -d --build
 ```
 
 ### Out of memory errors
+
 - Reduce concurrent requests
 - Switch to CPU mode if using GPU
 - Allocate more Docker memory
