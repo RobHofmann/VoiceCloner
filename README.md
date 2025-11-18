@@ -2,6 +2,8 @@
 
 A Dockerized REST API with web UI for voice cloning and text-to-speech using [NeuTTS Air](https://github.com/neuphonic/neutts-air) by Neuphonic.
 
+![Voice Cloning Interface](interface-screenshot.png)
+
 ## Features
 
 - **Web UI** for easy voice cloning and speech generation

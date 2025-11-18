@@ -30,6 +30,9 @@ outputs/
 *~
 .DS_Store
 
+# Playwright
+.playwright-mcp/
+
 # Docker
 docker-compose.override.yml
 
